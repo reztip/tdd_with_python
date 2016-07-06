@@ -1,2 +1,6 @@
 Django==1.8
+ecdsa==0.13
+Fabric==1.11.1
 gunicorn==19.6.0
+paramiko==1.17.1
+pycrypto==2.6.1

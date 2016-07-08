@@ -18,14 +18,14 @@ def deploy():
 
 def _create_directory_structure_if_necessary(site_folder):
     for subfolder in ('database', 'static', 'virtualenv', 'source'):
-        run('mkdir -p %s/%s' % (site_folder, subfolder))
+        sudo('mkdir -p %s/%s' % (site_folder, subfolder))
 
 def _get_latest_source(source_folder):
     if exists(source_folder + '/.git'):
-        run('cd %s && sudo git fetch' % (source_folder,))
+        sudo('cd %s && sudo git fetch' % (source_folder,))
 
     else:
-        run('sudo git clone %s %s' % (REPO_URL, source_folder))
+        sudo('sudo git clone %s %s' % (REPO_URL, source_folder))
 
     current_commit = local('git log -n 1 --format=%H', capture = True)
     run("cd %s && sudo git reset --hard %s" % (source_folder, current_commit))
@@ -50,7 +50,7 @@ def _update_settings(source_folder, site_name):
 
 
 def _update_virtualenv(source_folder):
-    virtualenv_folder = source_folder + '../virtualenv'
+    virtualenv_folder = source_folder + '/../virtualenv'
     if not exists(virtualenv_folder + '/bin/pip'):
         sudo('virtualenv --python=python3 %s' % (virtualenv_folder,))
     sudo('%s/bin/pip install -r %s/requirements.txt' % \

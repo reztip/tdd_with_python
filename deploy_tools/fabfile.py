@@ -6,7 +6,6 @@ REPO_URL = 'https://github.com/reztip/tdd_with_python.git'  #1
 
 def deploy():
     site_folder = '/home/reztip/sites/%s' % (env.host,)  #23
-    print(site_folder)
     source_folder = site_folder + '/source'
     _create_directory_structure_if_necessary(site_folder)
     _get_latest_source(source_folder)
@@ -14,6 +13,7 @@ def deploy():
     _update_virtualenv(source_folder)
     _update_static_files(source_folder)
     _update_database(source_folder)
+    _update_nginx_config(source, env.host)
 
 
 def _create_directory_structure_if_necessary(site_folder):
@@ -68,8 +68,12 @@ def _update_database(source_folder):
             (source_folder,))
 
 
+def _update_nginx_config(source_folder, site_host):
+    sudo("cd %s && sed s/SITENAME/%s/g deploy_tools/nginx.template.conf | sudo tee /etc/nginx/sites-available/%s" % (source_folder, site_host, site_host))
+    sudo("ln -s ../sites-available/%s /etc/nginx/sites-enabled/%s" % (site_host, site_host))
 
-
+def _update_upstart_config(source_folder, site_host):
+    sudo("cd %s && sed s/SITENAME/%s/g deploy_tools/gunicorn-%s.conf | sudo tee /etc/init/gunicorn-%s.conf" % (source_folder, site_host, site_host, site_host))
 
 
 

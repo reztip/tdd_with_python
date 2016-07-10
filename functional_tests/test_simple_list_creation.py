@@ -6,7 +6,7 @@ from unittest import skip
 
 class NewVisitorTest(FunctionalTest):
 
-    @skip
+    # @skip
     def test_can_start_a_list_and_retrieve_it_later(self):
         self.browser.get(self.server_url)
 

@@ -9,7 +9,7 @@ class ItemValidationTest(FunctionalTest):
         # She hits ENTER on the box
         self.browser.get(self.server_url)
         self.browser.implicitly_wait(5)
-        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox = self.get_item_input_box()
         self.browser.implicitly_wait(5)
         inputbox.send_keys(Keys.ENTER)
         self.browser.implicitly_wait(5)
@@ -23,7 +23,7 @@ class ItemValidationTest(FunctionalTest):
         self.browser.implicitly_wait(5)
         #She tries again with some text, which works
         self.browser.implicitly_wait(5)
-        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox = self.get_item_input_box()
         self.browser.implicitly_wait(5)
         inputbox.send_keys("Buy milk")
         self.browser.implicitly_wait(5)
@@ -34,7 +34,7 @@ class ItemValidationTest(FunctionalTest):
 
         #She again tries to submit a second blank list item
         #which again fails.
-        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox = self.get_item_input_box()
         self.browser.implicitly_wait(5)
         inputbox.send_keys(Keys.ENTER)
 
@@ -44,7 +44,7 @@ class ItemValidationTest(FunctionalTest):
         self.assertEqual(error.text, "You can't have an empty list item")
 
         # She corrects it by filling in text
-        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox = self.get_item_input_box()
         inputbox.send_keys("Make tea")
         inputbox.send_keys(Keys.ENTER)
         self.browser.implicitly_wait(5)

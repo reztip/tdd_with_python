@@ -48,7 +48,6 @@ class ItemValidationTest(FunctionalTest):
         inputbox.send_keys("Make tea")
         inputbox.send_keys(Keys.ENTER)
         self.browser.implicitly_wait(5)
-        self.browser.get(self.browser.current_url)
         self.check_for_row_in_list_table("1: Buy milk")
         self.browser.implicitly_wait(5)
         self.check_for_row_in_list_table("2: Make tea")
@@ -67,10 +66,12 @@ class ItemValidationTest(FunctionalTest):
         inputbox = self.get_item_input_box()
         inputbox.send_keys("Buy wellies")
         inputbox.send_keys(Keys.ENTER)
-        self.browser.get(self.browser.current_url)
+        # self.browser.get(self.browser.current_url)
         # 
         # #She gets a good error msg
+        self.browser.implicitly_wait(5)
         self.check_for_row_in_list_table('1: Buy wellies')
+        self.browser.implicitly_wait(5)
         error = self.browser.find_element_by_css_selector('.has-error')
         self.assertEqual(error.text, "You've already got this in your list")
 
